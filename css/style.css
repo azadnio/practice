@@ -28,6 +28,7 @@ body {
   line-height: 1.5rem;
   background: linear-gradient(95deg, #eaeaea 46%, #9b9b9b 100%);
   counter-reset: line-number;
+  padding-bottom: 3rem;
 }
 
 html {
