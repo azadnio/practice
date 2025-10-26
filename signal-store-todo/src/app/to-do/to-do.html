@@ -1,0 +1,38 @@
+<span class="title">
+    <mat-icon class="ico">pending_actions</mat-icon>
+</span>
+
+<mat-form-field appearance="outline">
+    <mat-label>Type a todo item and enter</mat-label>
+    <input matInput placeholder="Type to filter tasks" #input (keyup.enter)="addTodo(input)" />
+    <mat-icon matSuffix>edit</mat-icon>
+</mat-form-field>
+
+<mat-button-toggle-group name="status" aria-label="Status" #filter (change)="toggleFilter($event)">
+    <mat-button-toggle value="all">All</mat-button-toggle>
+    <mat-button-toggle value="pending">Pending</mat-button-toggle>
+    <mat-button-toggle value="completed">Completed</mat-button-toggle>
+</mat-button-toggle-group>
+
+<mat-list>
+    @for (item of store.filteredItems(); track item.id) {
+    <mat-list-item>
+        <div class="to-do-item" [class.stripe]="item.completed === true">
+            <mat-checkbox 
+                [checked]="item.completed" 
+                (change)="toggle(item)"
+                class="todo-checkbox">
+            </mat-checkbox>
+            <span [ngStyle]="{'text-decoration': item.completed ? 'line-through' : 'none'}" 
+                  class="todo-text">{{ item.title }}</span>
+            <mat-icon (click)="delete(item, $event)" class="delete-icon">delete</mat-icon>
+        </div>
+    </mat-list-item>
+    }
+</mat-list>
+
+@if(store.loading()) {
+    <div class="loading-overlay">
+        <mat-spinner diameter="50"></mat-spinner>
+    </div>      
+}
